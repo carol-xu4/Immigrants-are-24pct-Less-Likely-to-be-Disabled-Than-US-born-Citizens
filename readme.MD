@@ -52,11 +52,11 @@ disability benefit receipt among the disabled population, 2024
 ### Per capita disability benefit consumption, 2024
 Civilians age 15 and older
 
-| Immigration Status    | Disabled Population | Per Capita SS ($) | Per Capita SSI ($) | Per Capita Other ($) | Per Capita Any ($) |
+| Immigration Status    |  Per Capita SS ($) | Per Capita SSI ($) | Per Capita Other ($) | Per Capita Any ($) |
 |------------------------|----------------------|--------------------|----------------------|------------------------|----------------------|
-| Native-born Citizens   | 31,199,006            | 494.93             | 211.41               | 172.60                 | 878.93               |
-| Legal Immigrants       | 3,528,650             | 325.06             | 138.37               | 105.43                 | 568.85               |
-| Illegal Immigrants     | 365,954               | 0.00               | 0.00                 | 30.28                  | 30.28                |
-| All Immigrants         | 3,894,603             | 230.04             | 97.92                | 83.46                  | 411.42               |
+| Native-born Citizens   |            494.93             | 211.41               | 172.60                 | 878.93               |
+| Legal Immigrants       |             325.06             | 138.37               | 105.43                 | 568.85               |
+| Illegal Immigrants     |                0.00               | 0.00                 | 30.28                  | 30.28                |
+| All Immigrants         |               230.04             | 97.92                | 83.46                  | 411.42               |
 
 [View full data (fig.5.csv)](https://github.com/carol-xu4/Immigrants-are-24pct-Less-Likely-to-be-Disabled-Than-US-born-Citizens/blob/main/results/fig.5.csv)
