@@ -271,3 +271,101 @@ ggplot(disabled_all_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_
     panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/fig.2_acs_disabled_all_by_age_2024_smooth.png", width = 15, height = 10)
+
+# veterans
+# vets by immig status (vetstat universe is persons age 17+)
+vets2024 = disab_all %>%
+  filter(vetstat == 2, year == 2024) %>%
+  group_by(year, immig_status) %>%
+  summarise(n = n(),
+            population = sum(perwt, na.rm = TRUE),
+            .groups = "drop")
+
+print(vets2024)
+
+# % of veterans who are disabled, US-born vs. legal immigrants
+disabled_vets_pop = disab_all %>%
+  filter(vetstat == 2) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+print(disabled_vets_pop, n = Inf)
+
+# no veterans, disabled by age, 2024
+disab_all_2024_novets = disab_all_2024 %>%
+  filter(age >= 18) %>%
+  filter(vetstat != 2)
+
+disabled_novets_by_age_2024_65p = disab_all_2024_novets %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_novets_by_age_2024_65p_allimm = disab_all_2024_novets %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_novets_by_age_2024_65p = bind_rows(disabled_novets_by_age_2024_65p, disabled_novets_by_age_2024_65p_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disabled_novets_by_age_2024_65p, n = Inf)
+
+ggplot(disabled_novets_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_status, linetype = immig_status)) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.8, span = 0.3) +
+  scale_color_manual(values = colors_4) +
+  scale_linetype_manual(values = linetypes_4) +
+  scale_x_continuous(breaks = seq(20, 65, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 35)) +
+  labs(
+    title = "Disability Rate by Age and Immigration Status, Non-Veterans (2024)",
+    subtitle = "ACS; age 18+, excluding veterans; Age 65+ pooled \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    linetype = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_novets_by_age_2024_65plus_loess.png", width = 15, height = 10)
