@@ -11,6 +11,19 @@ acs = read_ipums_micro(ddi_acs)
 
 acs = acs %>% rename_with(tolower)
 
+acs = acs %>%
+  select(
+    year, serial, pernum, cluster, strata, perwt, statefip,
+    sex, age, race, hispan, marst, gq,
+    citizen, yrimmig, bpl, bpld, vetstat,
+    incss, incwelfr, incsupp,
+    classwkr, classwkrd, relate, related,
+    hcovany, hcovpriv, hinsemp, hinspur,
+    hcovpub, hinscaid, hinscare, hinsva, hinstri,
+    momloc, momloc2, poploc, poploc2,
+    inctot, ftotinc, poverty, cpi99,
+    occ2010, vetdisab, diffrem, diffphys, diffmob, diffcare, diffsens, diffeye, diffhear)
+
 # Residual Method ----------------------------------------------------------
 acs = acs %>%
   mutate(immigrant = ifelse(citizen == 2 |
@@ -102,4 +115,4 @@ acs = acs %>%
                                           "Legal immigrants",
                                           "Illegal immigrants")))
 
-fwrite(acs, "data/output/acs3.csv")
+fwrite(acs, "data/output/acs_disability.csv")
