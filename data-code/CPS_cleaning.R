@@ -13,6 +13,7 @@ cps = cps %>%
     rename_with(tolower)
 
 ## re-coding CPS variables to mirror ACS for residual method ----------------
+
 # remove yrimmig banding: midpoint & round up
 cps = cps %>%
   mutate(yrimmig = case_when(
