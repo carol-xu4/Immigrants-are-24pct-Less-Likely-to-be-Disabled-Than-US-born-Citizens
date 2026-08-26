@@ -1,8 +1,10 @@
+## Preliminaries -----------------------------------------------------------
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr, matrixStats)
 
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrants are 24pct Less Likely to be Disabled Than US-Born Citizens")
 
+# read in cleaned data ------------------------------------------------------
 cps = fread("data/output/cpsdata_disability.csv")
 
 colors = c(

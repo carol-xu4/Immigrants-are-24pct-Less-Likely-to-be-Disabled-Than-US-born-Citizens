@@ -1,8 +1,10 @@
+## Preliminaries -----------------------------------------------------------
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrants are 24pct Less Likely to be Disabled Than US-Born Citizens")
 
+# read in cleaned data ------------------------------------------------------
 acs = fread("data/output/acs_disability.csv") %>% select(-good, -slegal, -good1, -hlegal)
 
 colors = c(
