@@ -22,6 +22,80 @@ CPS_immig_counts = cps %>%
 
 write_csv(CPS_immig_counts, "results/CPS_immig_counts_year.csv")
 
+# population by state, 2024
+cpsstates_2024 = cps %>%
+  filter(year == 2024) %>%
+  group_by(statefip, immig_status) %>%
+  summarise (
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE)) %>% ungroup()
+
+state_lookup = tibble(
+  statefip = c( 1,  2,  4,  5,  6,  8,  9, 10, 11, 12, 13, 15, 16,
+               17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+               30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+               44, 45, 46, 47, 48, 49, 50, 51, 53, 54, 55, 56, 72),
+  state_abb = c("AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID",
+                "IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO",
+                "MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA",
+                "RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","PR"))
+
+cpsstates_2024 = cpsstates_2024 %>%
+  left_join(state_lookup, by = "statefip")
+
+print(cpsstates_2024, n = Inf)
+
+write_csv(cpsstates_2024, "results/cps_state_populations_2024")
+
+# 18-54 population
+cps18_54 = cps %>%
+  filter(year == 2024, age >=18 & age <= 54) %>%
+  group_by(immig_status) %>%
+  summarise (
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE)) %>% ungroup()
+
+print(cps18_54)
+
+write_csv(cps18_54, "results/cps_18_54pop.csv")
+
+# population by state, 2025
+cpsstates_2025 = cps %>%
+  filter(year == 2025) %>%
+  group_by(statefip, immig_status) %>%
+  summarise (
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE)) %>% ungroup()
+
+state_lookup = tibble(
+  statefip = c( 1,  2,  4,  5,  6,  8,  9, 10, 11, 12, 13, 15, 16,
+               17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+               30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+               44, 45, 46, 47, 48, 49, 50, 51, 53, 54, 55, 56, 72),
+  state_abb = c("AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID",
+                "IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO",
+                "MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA",
+                "RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","PR"))
+
+cpsstates_2025 = cpsstates_2025 %>%
+  left_join(state_lookup, by = "statefip")
+
+print(cpsstates_2025, n = Inf)
+
+write_csv(cpsstates_2025, "results/cps_state_populations_2025")
+
+# 18-54 population, 2025
+cps18_54_2025 = cps %>%
+  filter(year == 2025, age >=18 & age <= 54) %>%
+  group_by(immig_status) %>%
+  summarise (
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE)) %>% ungroup()
+
+print(cps18_54_2025)
+
+write_csv(cps18_54_2025, "results/cps_18_54pop_2025.csv")
+
 # disabled populations (diffany universe: civilians age 15+)
 disabled_pop = cps %>%
   filter(diffany %in% c(1, 2)) %>%
