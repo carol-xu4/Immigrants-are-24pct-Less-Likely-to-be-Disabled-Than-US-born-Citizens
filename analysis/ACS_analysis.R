@@ -59,7 +59,7 @@ states_2024 = states_2024 %>%
 
 print(states_2024, n = Inf)
 
-write_csv(states_2024, "results/acs_state_populations_2024")
+write_csv(states_2024, "results/acs_state_populations_2024.csv")
 
 # 18-54 population
 acs18_54 = acs %>%
