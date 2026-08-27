@@ -45,7 +45,7 @@ cpsstates_2024 = cpsstates_2024 %>%
 
 print(cpsstates_2024, n = Inf)
 
-write_csv(cpsstates_2024, "results/cps_state_populations_2024")
+write_csv(cpsstates_2024, "results/cps_state_populations_2024.csv")
 
 # 18-54 population
 cps18_54 = cps %>%
@@ -72,7 +72,7 @@ cpsstates_2025 = cpsstates_2025 %>%
 
 print(cpsstates_2025, n = Inf)
 
-write_csv(cpsstates_2025, "results/cps_state_populations_2025")
+write_csv(cpsstates_2025, "results/cps_state_populations_2025.csv")
 
 # 18-54 population, 2025
 cps18_54_2025 = cps %>%
